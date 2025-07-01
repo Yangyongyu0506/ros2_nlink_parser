@@ -28,31 +28,7 @@
 
 ### 第 2 步：连接硬件并确定串口号
 
-这是最关键的一步。`/dev/ttyUSB0` 只是一个常见的默认名称，您的系统可能会将其识别为 `/dev/ttyUSB1` 或其他名称。
-
-1.  **先不要连接设备**：打开一个终端，运行以下命令，看看当前系统有哪些USB串口设备。很可能什么都没有。
-
-    ```bash
-    ls /dev/ttyUSB*
-    ```
-
-2.  **连接您的NLink设备**：将您的LinkTrack或其他设备通过USB线连接到电脑。
-
-3.  **再次运行命令**：在同一个终端中，再次运行：
-
-    ```bash
-    ls /dev/ttyUSB*
-    ```
-
-    现在，您应该能看到一个新的设备文件出现了，例如 `/dev/ttyUSB0`。**这个新出现的名称，就是您设备真正的串口号！**
-
-4.  **(备选方法) 使用 `dmesg`**：如果上面的方法不清晰，您也可以使用 `dmesg` 命令，它会显示系统内核日志，通常会明确指出设备连接到了哪个tty。
-
-    ```bash
-    dmesg | grep tty
-    ```
-
-    您会在输出的最后几行看到类似 `cdc_acm 1-2:1.0: ttyACM0: USB ACM device` 或 `usb 1-1.2: ch341-uart converter now attached to ttyUSB0` 的信息。
+详见[官方操作步骤](https://github.com/WCHSoftGroup/ch343ser_linux)
 
 ### 第 3 步：检查并设置串口权限
 
