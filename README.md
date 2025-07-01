@@ -46,6 +46,3 @@
   - **原始 nlink\_parser (ROS1) 仓库**: [https://github.com/nooploop-dev/nlink_parser](https://github.com/nooploop-dev/nlink_parser)
   - **主要代码来源**: [https://github.com/csw609/nlink_parser](https://github.com/csw609/nlink_parser)
 
-## 致谢
-
-这是本人第一个项目，可能存在诸多不足之处，欢迎大家提出宝贵意见和建议。如有错误，敬请指点！
