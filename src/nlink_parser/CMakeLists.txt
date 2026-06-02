@@ -49,7 +49,7 @@ add_library(nutils
     include/utils/nlink_protocol.cpp
     include/utils/nutils.cpp
 )
-ament_target_dependencies(nutils rclcpp std_msgs nlink_parser_interfaces)
+ament_target_dependencies(nutils rclcpp std_msgs nlink_parser_interfaces serial)
   
 
 add_executable(linktrack src/linktrack.cpp 
