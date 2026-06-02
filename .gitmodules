@@ -1,0 +1,3 @@
+[submodule "src/serial"]
+	path = src/serial
+	url = https://github.com/nooploop-dev/serial.git
