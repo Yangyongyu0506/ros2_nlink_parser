@@ -1,12 +1,8 @@
 #ifndef LINKTRACKAOAINIT_H
 #define LINKTRACKAOAINIT_H
 
-//#include <nlink_parser/LinktrackAoaNodeframe0.h>
-//#include <nlink_parser/LinktrackNodeframe0.h>
-
 #include "nlink_parser_interfaces/msg/linktrack_aoa_nodeframe0.hpp"
 #include "nlink_parser_interfaces/msg/linktrack_nodeframe0.hpp"
-
 
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
@@ -29,13 +25,10 @@ namespace linktrack_aoa
     void initDataTransmission();
     void initNodeFrame0(NProtocolExtracter *protocol_extraction);
     void InitAoaNodeFrame0(NProtocolExtracter *protocol_extraction);
-    
-    //std::unordered_map<NProtocolBase *, ros::Publisher> publishers_;
+
     rclcpp::Publisher<nlink_parser_interfaces::msg::LinktrackNodeframe0>::SharedPtr     publisher_LinktrackNodeframe0;
     rclcpp::Publisher<nlink_parser_interfaces::msg::LinktrackAoaNodeframe0>::SharedPtr    publisher_LinktrackAoaNodeframe0_;
 
-    //ros::NodeHandle nh_;
-    //ros::Subscriber dt_sub_;
     rclcpp::Node *node;
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr dt_sub_;
   };

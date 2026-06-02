@@ -1,13 +1,10 @@
 #ifndef TOFSENSEINIT_H
 #define TOFSENSEINIT_H
 
-//#include <nlink_parser/TofsenseCascade.h>
-//#include <nlink_parser/TofsenseFrame0.h>
 #include <nlink_parser_interfaces/msg/tofsense_cascade.hpp>
 #include <nlink_parser_interfaces/msg/tofsense_frame0.hpp>
 
-// #include <ros/ros.h>
-#include<rclcpp/rclcpp.hpp>
+#include <rclcpp/rclcpp.hpp>
 #include <serial/serial.h>
 
 #include <map>
@@ -26,7 +23,6 @@ namespace tofsense
 
   private:
     void InitFrame0(NProtocolExtracter *protocol_extraction);
-    //std::unordered_map<NProtocolBase *, ros::Publisher> publishers_;
     rclcpp::Publisher<nlink_parser_interfaces::msg::TofsenseCascade>::SharedPtr  publisher_TofsenseCascade_;
     rclcpp::Publisher<nlink_parser_interfaces::msg::TofsenseFrame0>::SharedPtr  publisher_TofsenseFrame0_;
 
@@ -37,11 +33,8 @@ namespace tofsense
     const int frequency_ = 10;
     bool is_inquire_mode_ = true;
 
-    //ros::NodeHandle nh_;
     rclcpp::Node *node;
-    
-    //ros::Timer timer_scan_;
-    //ros::Timer timer_read_;
+
     rclcpp::TimerBase::SharedPtr timer_scan_;
     rclcpp::TimerBase::SharedPtr timer_read_;
     uint8_t node_index_ = 0;

@@ -45,10 +45,10 @@ namespace iot
         {
           if (!publisher_IotFrame0_)
           {
-            //ros::NodeHandle nh_;
             auto topic = "nlink_iot_frame0";
-            publisher_IotFrame0_ = node->create_publisher<nlink_parser_interfaces::msg::IotFrame0>(topic,50);
-                //nh_.advertise<nlink_parser::IotFrame0>(topic, 50);
+            publisher_IotFrame0_ =
+                node->create_publisher<nlink_parser_interfaces::msg::IotFrame0>(
+                    topic, 50);
             TopicAdvertisedTip(topic);
           }
 

@@ -21,10 +21,17 @@ class TOFSenseM : public rclcpp::Node
 public:
     TOFSenseM() : Node("tofsensem"), count_(0)
     {
+        this->declare_parameter<std::string>("port_name", "/dev/ttyCH343USB0");
+        this->declare_parameter<int>("baud_rate", 921600);
+
+        auto port_name = this->get_parameter("port_name").as_string();
+        auto baud_rate = static_cast<uint32_t>(
+            this->get_parameter("baud_rate").as_int());
+
         serial::Serial serial;
         NProtocolExtracter extracter;
 
-        initSerial(&serial);
+        initSerial(&serial, port_name, baud_rate);
         tofsensem::Init init(&extracter, this);
 
         while (rclcpp::ok())

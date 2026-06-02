@@ -51,10 +51,10 @@ namespace tofsensem
         {
           if (!publisher_TofsenseMFrame0_)
           {
-            //ros::NodeHandle nh_;
             auto topic = "nlink_tofsensem_frame0";
-            publisher_TofsenseMFrame0_ = node->create_publisher<nlink_parser_interfaces::msg::TofsenseMFrame0>(topic,50);
-                //nh_.advertise<nlink_parser::TofsenseMFrame0>(topic, 50);
+            publisher_TofsenseMFrame0_ =
+                node->create_publisher<nlink_parser_interfaces::msg::TofsenseMFrame0>(
+                    topic, 50);
             TopicAdvertisedTip(topic);
           }
 

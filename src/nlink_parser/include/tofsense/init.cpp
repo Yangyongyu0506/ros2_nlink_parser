@@ -49,8 +49,7 @@ namespace tofsense
   {
     node = nd;
     bool inquire_mode = true;
-    is_inquire_mode_ = inquire_mode; // To Do : Parametrization
-                                     // serial_ ? ros::param::param<bool>("~inquire_mode", true) : false;
+    is_inquire_mode_ = inquire_mode;
 
     InitFrame0(protocol_extraction);
   }
@@ -64,19 +63,20 @@ namespace tofsense
         {
           if (!publisher_TofsenseCascade_ && !publisher_TofsenseFrame0_)
           {
-            // ros::NodeHandle nh_;
             if (is_inquire_mode_)
             {
               auto topic = "nlink_tofsense_cascade";
-              publisher_TofsenseCascade_ = node->create_publisher<nlink_parser_interfaces::msg::TofsenseCascade>(topic, 50);
-              // nh_.advertise<nlink_parser::TofsenseCascade>(topic, 50);
+              publisher_TofsenseCascade_ =
+                  node->create_publisher<nlink_parser_interfaces::msg::TofsenseCascade>(
+                      topic, 50);
               TopicAdvertisedTip(topic);
             }
             else
             {
               auto topic = "nlink_tofsense_frame0";
-              publisher_TofsenseFrame0_ = node->create_publisher<nlink_parser_interfaces::msg::TofsenseFrame0>(topic, 50);
-              // nh_.advertise<nlink_parser::TofsenseFrame0>(topic, 50);
+              publisher_TofsenseFrame0_ =
+                  node->create_publisher<nlink_parser_interfaces::msg::TofsenseFrame0>(
+                      topic, 50);
               TopicAdvertisedTip(topic);
             }
           }
@@ -104,28 +104,16 @@ namespace tofsense
     {
       timer_scan_ = node->create_wall_timer(
           100ms,
-          [=]() // (const ros::TimerEvent &)
+          [=]()
           {
             frame0_map_.clear();
             node_index_ = 0;
-            // timer_read_.start();
             timer_read_->reset();
-          }
-          
-          );
+          });
 
-      // timer_scan_ = nh_.createTimer(
-      //     ros::Duration(1.0 / frequency_),
-      //     [=](const ros::TimerEvent &)
-      //     {
-      //       frame0_map_.clear();
-      //       node_index_ = 0;
-      //       timer_read_.start();
-      //     },
-      //     false, true);
       timer_read_ = node->create_wall_timer(
           6ms,
-          [=]() // (const ros::TimerEvent &)
+          [=]()
           {
             if (node_index_ >= 8)
             {
@@ -138,7 +126,6 @@ namespace tofsense
                 }
                 publisher_TofsenseCascade_->publish(msg_cascade);
               }
-              // timer_read_.stop();
               timer_read_->cancel();
             }
             else
@@ -150,33 +137,6 @@ namespace tofsense
               ++node_index_;
             }
           });
-      // timer_read_ = nh_.createTimer(
-      //     ros::Duration(0.006),
-      //     [=](const ros::TimerEvent &)
-      //     {
-      //       if (node_index_ >= 8)
-      //       {
-      //         if (!frame0_map_.empty())
-      //         {
-      //           nlink_parser::TofsenseCascade msg_cascade;
-      //           for (const auto &msg : frame0_map_)
-      //           {
-      //             msg_cascade.nodes.push_back(msg.second);
-      //           }
-      //           publisher_TofsenseCascade_->publish(msg_cascade);
-      //         }
-      //         timer_read_.stop();
-      //       }
-      //       else
-      //       {
-      //         g_command_read.id = node_index_;
-      //         auto data = reinterpret_cast<uint8_t *>(&g_command_read);
-      //         NLink_UpdateCheckSum(data, sizeof(g_command_read));
-      //         serial_->write(data, sizeof(g_command_read));
-      //         ++node_index_;
-      //       }
-      //     },
-      //     false, false);
     }
   }
 

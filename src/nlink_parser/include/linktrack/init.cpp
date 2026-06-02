@@ -1,22 +1,6 @@
 #include "init.h"
 
-// #include <nlink_parser/LinktrackAnchorframe0.h>
-// #include <nlink_parser/LinktrackNodeframe0.h>
-// #include <nlink_parser/LinktrackNodeframe1.h>
-// #include <nlink_parser/LinktrackNodeframe2.h>
-// #include <nlink_parser/LinktrackNodeframe3.h>
-// #include <nlink_parser/LinktrackNodeframe4.h>
-// #include <nlink_parser/LinktrackNodeframe5.h>
-// #include <nlink_parser/LinktrackNodeframe6.h>
-// #include <nlink_parser/LinktrackTagframe0.h>
-
-
-//#include <ros/ros.h>
-//#include <std_msgs/String.h>
-
-//#include "nutils.h"
 #include "utils/nutils.h"
-//#include "protocols.h"
 #include "linktrack/protocols.h"
 
 #define ARRAY_ASSIGN(DEST, SRC)                                                \
@@ -55,30 +39,16 @@ namespace linktrack
     initNodeFrame6(protocol_extraction);
   }
 
-  // static void DTCallback(const std_msgs::String::ConstPtr &msg)
-  // {
-  //   if (serial_)
-  //     serial_->write(msg->data);
-  // }
-  //  static void DTCallback(const std_msgs::msg::String::SharedPtr &msg)
-  // {
-  //   if (serial_)
-  //     serial_->write(msg->data);
-  // }
-  
-  
-
   void Init::initDataTransmission()
   {
     dt_sub_ =
-        node->create_subscription<std_msgs::msg::String>("nlink_linktrack_data_transmission", 1000,
-        [this](const std_msgs::msg::String::SharedPtr msg) -> void{ // 'this' right??
-          //DTCallback
-          if (serial_)
-          serial_->write(msg->data);
-        }
-        );
-        //nh_.subscribe("nlink_linktrack_data_transmission", 1000, DTCallback);
+        node->create_subscription<std_msgs::msg::String>(
+            "nlink_linktrack_data_transmission", 1000,
+            [this](const std_msgs::msg::String::SharedPtr msg) -> void
+            {
+              if (serial_)
+                serial_->write(msg->data);
+            });
   }
 
   void Init::initAnchorFrame0(NProtocolExtracter *protocol_extraction)
@@ -91,8 +61,9 @@ namespace linktrack
           if (!publisher_Anchorframe0_)
           {
             auto topic = "nlink_linktrack_anchorframe0";
-            publisher_Anchorframe0_ = node->create_publisher<nlink_parser_interfaces::msg::LinktrackAnchorframe0>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackAnchorframe0>(topic, 200);
+            publisher_Anchorframe0_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackAnchorframe0>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
           }
           auto data = nlt_anchorframe0_.result;
@@ -127,8 +98,9 @@ namespace linktrack
           if (!publisher_LinktrackTagframe0_)
           {
             auto topic = "nlink_linktrack_tagframe0";
-            publisher_LinktrackTagframe0_ = node->create_publisher<nlink_parser_interfaces::msg::LinktrackTagframe0>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackTagframe0>(topic, 200);
+            publisher_LinktrackTagframe0_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackTagframe0>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
           }
 
@@ -163,10 +135,10 @@ namespace linktrack
           if (!publisher_LinktrackNodeframe0_)
           {
             auto topic = "nlink_linktrack_nodeframe0";
-            publisher_LinktrackNodeframe0_ = node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe0>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackNodeframe0>(topic, 200);
+            publisher_LinktrackNodeframe0_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe0>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
-            ;
           }
           const auto &data = g_nlt_nodeframe0.result;
           auto &msg_data = g_msg_nodeframe0;
@@ -200,8 +172,9 @@ namespace linktrack
           if (!publisher_LinktrackNodeframe1_)
           {
             auto topic = "nlink_linktrack_nodeframe1";
-            publisher_LinktrackNodeframe1_ = node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe1>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackNodeframe1>(topic, 200);
+            publisher_LinktrackNodeframe1_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe1>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
           }
           const auto &data = g_nlt_nodeframe1.result;
@@ -238,10 +211,10 @@ namespace linktrack
           if (!publisher_LinktrackNodeframe2_)
           {
             auto topic = "nlink_linktrack_nodeframe2";
-            publisher_LinktrackNodeframe2_ = node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe2>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackNodeframe2>(topic, 200);
+            publisher_LinktrackNodeframe2_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe2>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
-            //test_ = node->create_publisher<std_msgs::msg::String>("test", 200);
           }
           const auto &data = g_nlt_nodeframe2.result;
           auto &msg_data = g_msg_nodeframe2;
@@ -273,9 +246,6 @@ namespace linktrack
           }
 
           publisher_LinktrackNodeframe2_->publish(msg_data);
-          // std_msgs::msg::String str;
-          // str.data = "tetstest";
-          // test_->publish(str);
         });
   }
 
@@ -289,8 +259,9 @@ namespace linktrack
           if (!publisher_LinktrackNodeframe3_)
           {
             auto topic = "nlink_linktrack_nodeframe3";
-            publisher_LinktrackNodeframe3_ = node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe3>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackNodeframe3>(topic, 200);
+            publisher_LinktrackNodeframe3_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe3>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
           }
           const auto &data = g_nlt_nodeframe3.result;
@@ -329,8 +300,9 @@ namespace linktrack
           if (!publisher_LinktrackNodeframe4_)
           {
             auto topic = "nlink_linktrack_nodeframe4";
-            publisher_LinktrackNodeframe4_ = node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe4>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackNodeframe4>(topic, 200);
+            publisher_LinktrackNodeframe4_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe4>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
           }
           const auto &data = g_nlt_nodeframe4.result;
@@ -371,8 +343,9 @@ namespace linktrack
           if (!publisher_LinktrackNodeframe5_)
           {
             auto topic = "nlink_linktrack_nodeframe5";
-            publisher_LinktrackNodeframe5_ = node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe5>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackNodeframe5>(topic, 200);
+            publisher_LinktrackNodeframe5_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe5>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
           }
           const auto &data = g_nlt_nodeframe5.result;
@@ -411,10 +384,10 @@ namespace linktrack
           if (!publisher_LinktrackNodeframe6_)
           {
             auto topic = "nlink_linktrack_nodeframe6";
-            publisher_LinktrackNodeframe6_= node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe6>(topic,200);
-                //nh_.advertise<nlink_parser::LinktrackNodeframe6>(topic, 200);
+            publisher_LinktrackNodeframe6_ =
+                node->create_publisher<nlink_parser_interfaces::msg::LinktrackNodeframe6>(
+                    topic, 200);
             TopicAdvertisedTip(topic);
-            ;
           }
           const auto &data = g_nlt_nodeframe6.result;
           auto &msg_data = g_msg_nodeframe6;

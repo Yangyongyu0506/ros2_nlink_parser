@@ -4,27 +4,15 @@
 
 以下是详细的步骤指南：
 
-### 第 1 步：将代码改回硬件配置
+### 第 1 步：使用 ROS2 参数指定串口和波特率
 
-您需要将在虚拟测试时对代码的修改还原，让程序去监听真实的物理串口。
+您现在无需修改代码，直接通过 ROS2 参数即可设置串口名和波特率。
 
-1.  **修改`init_serial.cpp`**:
+```bash
+ros2 run nlink_parser linktrack --ros-args -p port_name:="/dev/ttyUSB0" -p baud_rate:=921600
+```
 
-      * 打开文件 `~/dev_ws/src/nlink_parser/include/utils/init_serial.cpp`。
-      * 找到您之前修改的 `port_name` 变量。
-      * 将其从虚拟端口（如 `/dev/pts/4`）改回通常的物理USB串口名称：
-        ```cpp
-        // 将下面这行代码改回
-        auto port_name = "/dev/ttyUSB0";
-        ```
-
-2.  **重新编译**:
-    因为您修改了代码，所以需要重新编译 `nlink_parser` 包。
-
-    ```bash
-    cd ~/dev_ws
-    colcon build --packages-select nlink_parser
-    ```
+默认值为 `port_name="/dev/ttyCH343USB0"`，`baud_rate=921600`。
 
 ### 第 2 步：连接硬件并确定串口号
 
@@ -32,7 +20,7 @@
 
 ### 第 3 步：检查并设置串口权限
 
-在Linux系统中，普通用户默认可能没有直接读写串口的权限，这会导致程序运行时报 “Permission denied” 或 “无法打开串口” 的错误。
+在Linux系统中，普通用户默认可能没有直接读写串口的权限，这会导致程序运行时报 "Permission denied" 或 "无法打开串口" 的错误。
 
 1.  **运行以下命令**，将您当前的用户添加到 `dialout` 用户组（这个组通常拥有串口访问权限）。
 
@@ -57,11 +45,11 @@
 
       * 如果您的设备是LinkTrack，运行：
         ```bash
-        ros2 run nlink_parser linktrack
+        ros2 run nlink_parser linktrack --ros-args -p port_name:="/dev/ttyUSB0"
         ```
       * 如果您的设备是TOFSense，运行：
         ```bash
-        ros2 run nlink_parser tofsense
+        ros2 run nlink_parser tofsense --ros-args -p port_name:="/dev/ttyUSB0"
         ```
 
     如果一切正常，您应该会看到程序打印出 `Serial port opened successfully, waiting for data.`。
