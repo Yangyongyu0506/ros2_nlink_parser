@@ -21,7 +21,7 @@ class TOFSenseM : public rclcpp::Node
 public:
     TOFSenseM() : Node("tofsensem"), count_(0)
     {
-        this->declare_parameter<std::string>("port_name", "/dev/ttyCH343USB0");
+        this->declare_parameter<std::string>("port_name", "/dev/ttyUSB0");
         this->declare_parameter<int>("baud_rate", 921600);
 
         auto port_name = this->get_parameter("port_name").as_string();
