@@ -106,23 +106,25 @@ socat -d -d pty,raw,echo=0 pty,raw,echo=0
 
 无需修改源码！现在直接通过ROS2参数指定串口即可。
 
-1.  **重新编译**: 打开一个**新的终端**（"**终端B**"），进入工作区并编译。
+**前置条件**：本仓库已放入ROS2工作空间（例如 `~/dev_ws/src/ros2_nlink_parser`）并完成编译。
+
+1.  **编译**: 打开一个**新的终端**（"**终端B**"），进入工作区并编译。
 
     ```bash
     cd ~/dev_ws
     colcon build --packages-select nlink_parser
     ```
 
-2.  **启动虚拟设备**: 打开一个**新的终端**（"**终端C**"），然后运行Python脚本。
+2.  **启动虚拟设备**: 打开一个**新的终端**（"**终端C**"），运行仓库根目录下的 `virtual_device.py`。
 
     ```bash
-    cd ~/dev_ws
+    cd ~/dev_ws/src/ros2_nlink_parser
     python3 virtual_device.py
     ```
 
     您应该能看到它打印出"串口连接成功"并开始发送数据。
 
-3.  **启动nlink\_parser**: 回到**终端B**，source您的工作区，然后通过参数指定另一个虚拟串口运行。
+3.  **启动nlink\_parser**: 回到**终端B**，source工作区，然后通过参数指定另一个虚拟串口运行。
 
     ```bash
     cd ~/dev_ws
@@ -132,7 +134,7 @@ socat -d -d pty,raw,echo=0 pty,raw,echo=0
 
     您应该能看到它打印出"Serial port opened successfully"。
 
-4.  **验证数据**: 打开一个**新的终端**（"**终端D**"），source您的工作区，然后用`echo`命令查看话题。
+4.  **验证数据**: 打开一个**新的终端**（"**终端D**"），source工作区，然后用`echo`命令查看话题。
 
     ```bash
     cd ~/dev_ws

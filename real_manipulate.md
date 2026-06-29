@@ -37,33 +37,49 @@ ros2 run nlink_parser linktrack --ros-args -p port_name:="/dev/ttyUSB0" -p baud_
 1.  **Source工作区**：打开一个新终端，source您的工作区环境。
 
     ```bash
+    source /opt/ros/humble/setup.bash
     cd ~/dev_ws
     source install/setup.bash
     ```
 
 2.  **运行节点**：根据您的设备类型，运行对应的可执行文件。
 
-      * 如果您的设备是LinkTrack，运行：
-        ```bash
-        ros2 run nlink_parser linktrack --ros-args -p port_name:="/dev/ttyUSB0"
-        ```
-      * 如果您的设备是TOFSense，运行：
-        ```bash
-        ros2 run nlink_parser tofsense --ros-args -p port_name:="/dev/ttyUSB0"
-        ```
+    - LinkTrack：
+      ```bash
+      ros2 run nlink_parser linktrack --ros-args -p port_name:="/dev/ttyUSB0"
+      ```
+    - LinkTrack AoA：
+      ```bash
+      ros2 run nlink_parser linktrack_aoa --ros-args -p port_name:="/dev/ttyUSB0"
+      ```
+    - IOT：
+      ```bash
+      ros2 run nlink_parser iot --ros-args -p port_name:="/dev/ttyUSB0"
+      ```
+    - TOFSense：
+      ```bash
+      ros2 run nlink_parser tofsense --ros-args -p port_name:="/dev/ttyUSB0"
+      ```
+    - TOFSense-M：
+      ```bash
+      ros2 run nlink_parser tofsensem --ros-args -p port_name:="/dev/ttyUSB0"
+      ```
 
-    如果一切正常，您应该会看到程序打印出 `Serial port opened successfully, waiting for data.`。
+    如果一切正常，程序将打印串口打开成功的信息。
 
 3.  **验证ROS话题**：打开**另一个**新的终端，source工作区后，使用ROS2工具进行验证。
 
-      * 首先，查看话题列表，确认您的数据话题（如 `/nlink_linktrack_nodeframe2`）是否已经出现。
+      - 查看话题列表，确认数据话题是否已出现：
         ```bash
+        source /opt/ros/humble/setup.bash
+        cd ~/dev_ws
+        source install/setup.bash
         ros2 topic list
         ```
-      * 然后，用`echo`命令实时查看数据流。
+      - 用 `echo` 实时查看数据：
         ```bash
-        ros2 topic echo /nlink_linktrack_nodeframe2 
+        ros2 topic echo /nlink_linktrack_nodeframe2
         ```
-        （请将话题名换成您实际看到的话题）
+        （请将话题名换成您实际使用设备对应的话题）
 
 如果终端上开始持续打印出从硬件解析的实时数据，那么恭喜您，您的项目已经完全在实机上成功运行了！

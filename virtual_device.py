@@ -5,11 +5,10 @@ import sys
 # --- 配置 ---
 # !! 重要：这里的串口号必须是 socat 创建的两个串口之一 !!
 # 例如，如果socat创建了/dev/pts/3和/dev/pts/4，这里就填其中一个
-VIRTUAL_SERIAL_PORT = '/dev/pts/2' 
+VIRTUAL_SERIAL_PORT = '/dev/pts/3'
 
-# 从 nlink_parser/include/utils/nlink_unpack/example.c 文件中复制的示例数据
-# 我们换成使用 LinkTrack NodeFrame1 的数据进行测试
-nodeframe1_hex_string = "55 03 44 00 03 00 e8 80 00 00 00 86 00 00 01 51 01 e8 01 f2 02 02 92 09 48 13 02 02 00 5f 0b 00 86 09 00 9b ff ff c9 37 8a 34 06 ee 37 3f aa 02 02 93 09 00 45 09 00 c4 fc ff 8d 09 00 66 09 00 c4 fc ff 8e"
+# 从 src/nlink_parser/include/utils/nlink_unpack/example.c 中复制的 LinkTrack NodeFrame2 示例数据
+nodeframe2_hex_string = "55 04 8F 00 02 01 8E 7A 77 01 03 00 00 00 00 00 D0 17 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 03 01 F4 01 01 FA 02 01 1E 9A"
 
 
 
@@ -32,7 +31,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # 将示例数据转换为字节
-    data_to_send = hex_string_to_bytes(nodeframe1_hex_string)
+    data_to_send = hex_string_to_bytes(nodeframe2_hex_string)
 
     print(f"准备发送数据 (共 {len(data_to_send)} 字节): {data_to_send.hex(' ').upper()}")
 
@@ -41,7 +40,7 @@ if __name__ == "__main__":
         while True:
             ser.write(data_to_send)
             print(f"已发送 {len(data_to_send)} 字节的数据。")
-            time.sleep(1)  # 每 100ms 发送一次
+            time.sleep(0.1)  # 每 100ms 发送一次
     except KeyboardInterrupt:
         print("\n程序被用户中断。关闭串口。")
     except Exception as e:
